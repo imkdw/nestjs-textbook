@@ -10,24 +10,25 @@ export class UsersController {
 
   @Post()
   async createUser(@Body() dto: CreateUserDto): Promise<void> {
-    console.log(dto);
+    const { email, name, password } = dto;
+    await this.usersService.createUser(email, name, password);
   }
 
   @Post('/email-verfiy')
   async verifyEmail(@Query() dto: VerifyEmailDto) {
-    console.log(dto);
-    return;
+    const { signupVerifyToken } = dto;
+
+    await this.usersService.verifyEmail(signupVerifyToken);
   }
 
   @Post('/login')
   async login(@Body() dto: UserLoginDto) {
-    console.log(dto);
-    return;
+    const { email, password } = dto;
+    await this.usersService.login(email, password);
   }
 
   @Get('/:id')
   async getUserInfo(@Param('id') userId: string) {
-    console.log(userId);
-    return;
+    return await this.usersService.getUserInfo(userId);
   }
 }
